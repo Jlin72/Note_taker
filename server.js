@@ -3,7 +3,8 @@ const express = require("express");
 const path = require("path");
 const PORT = 8080;
 const app = express();
-const dbEl = require('./db/db.json')
+const dbEl = require('./db/db.json');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 let dbArr;
 
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +22,6 @@ app.use(express.static('public'))
 
 app.get('/api/notes', (req, res) => {
     dbArr = dbEl;
-    console.log('this is the array id: '+dbArr[0].id);
     res.json(dbEl);
 })
 
@@ -31,8 +31,7 @@ app.get('/api/notes/:note', (req, res) => {
     console.log('this is: '+chosen);
   
     for (let i = 0; i < dbArr.length; i++) {
-        let newString = dbArr[i].id;
-        if(chosen === newString) {
+        if(chosen === dbArr[i].id) {
             return res.json(dbArr[i]);
         }
     }
@@ -47,6 +46,15 @@ app.post('/api/notes', (req, res) => {
     console.log(newNote);
     dbEl.push(newNote);
     res.json(newNote);
+})
+
+app.delete('/api/notes/:note', (req, res) => {
+    const chosen = req.params.note;
+    for (let i = 0; i < dbArr.length; i++) {
+        if(chosen === dbArr[i].id) {
+            res.send(`User deleted this note: ${dbArr[i].title}`);
+        }
+    }
 })
 
 app.listen(PORT, (err) => {

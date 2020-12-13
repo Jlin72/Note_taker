@@ -60,9 +60,7 @@ const deleteNote = (id) => {
     headers: {
       'Content-Type': 'application/json',
     },
-  })
-  .then (response => response.json())
-  .then (data => JSON.stringify(data));
+  });
 };
  
 
@@ -98,7 +96,7 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
-  console.log(noteId);
+  console.log(typeof noteId);
 
   if (activeNote.id === noteId) {
     activeNote = {};
