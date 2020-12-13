@@ -25,22 +25,16 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-const getNotes = () =>
-  fetch('/api/notes', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    const {title, text} = data;
-    return data;
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+const getNotes = async() => {
+  const res = await fetch('/api/notes', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+  const json = await res.json();
+  return json;
+}
 
 
 const saveNote = (note) =>
@@ -60,13 +54,17 @@ const saveNote = (note) =>
             console.error('Error:', error);
           }); 
 
-const deleteNote = (id) =>
+const deleteNote = (id) => {
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })
+  .then (response => response.json())
+  .then (data => JSON.stringify(data));
+};
+ 
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -100,6 +98,7 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  console.log(noteId);
 
   if (activeNote.id === noteId) {
     activeNote = {};
@@ -120,6 +119,7 @@ const handleNoteView = (e) => {
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
+  e.preventDefault();
   activeNote = {};
   renderActiveNote();
 };
@@ -134,7 +134,7 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+  let jsonNotes = await getNotes(notes);
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
