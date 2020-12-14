@@ -1,4 +1,4 @@
-https://img.shields.io/bower/l/MI https://img.shields.io/npm/v/npm <img alt="David" src="https://img.shields.io/david/expressjs/express">
+![License badge](https://img.shields.io/bower/l/MI) https://img.shields.io/npm/v/npm <img alt="David" src="https://img.shields.io/david/expressjs/express">
 
 # Note taker
 ## Table of contents
