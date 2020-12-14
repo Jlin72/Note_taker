@@ -1,4 +1,4 @@
-![Bower](https://img.shields.io/bower/l/MI) ![npm](https://img.shields.io/npm/v/npm) ![David](https://img.shields.io/david/expressjs/express)
+![NPM](https://img.shields.io/npm/l/express) ![npm](https://img.shields.io/npm/v/npm) ![David](https://img.shields.io/david/expressjs/express)
 
 # Note taker
 ## Table of contents
