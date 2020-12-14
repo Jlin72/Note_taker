@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const app = express();
 const dbEl = require('./db/db.json');
 const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
